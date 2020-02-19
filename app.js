@@ -49,7 +49,7 @@ const products = [
 ]
 
 app.get('/',(req,res) => {
-    res.render('home',{products:products});
+    res.render('home',{products:products, pageTitle:'Products'});
 })
 
 app.listen(port, () => {
