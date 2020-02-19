@@ -25,6 +25,26 @@ const products = [
         ID: 3,
         Megnevezés: 'Processzor',
         Csoport: 'Számítástechnika'
+    },
+    {
+        ID: 4,
+        Megnevezés: 'Processzor',
+        Csoport: 'Számítástechnika'
+    },
+    {
+        ID: 5,
+        Megnevezés: 'Processzor',
+        Csoport: 'Számítástechnika'
+    },
+    {
+        ID: 6,
+        Megnevezés: 'Processzor',
+        Csoport: 'Számítástechnika'
+    },
+    {
+        ID: 7,
+        Megnevezés: 'Processzor',
+        Csoport: 'Számítástechnika'
     }
 ]
 
