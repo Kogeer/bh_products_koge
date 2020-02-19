@@ -1,0 +1,16 @@
+html body {
+    background-color: #212529;
+}
+.main-logo {
+    width: 30%;
+}
+#main-header-text {
+    font-size: 24px;
+    background-color: bisque;
+    font-style: italic;
+    padding: 20px;
+    border: 1px solid;
+}
+#main-logo-container {
+    border: 1px solid;
+}

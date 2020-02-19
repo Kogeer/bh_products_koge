@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/index.css">
+    <script src='/jquery/dist/jquery.min.js'></script>
+    <link type="text/css" rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <script src='/bootstrap/dist/js/bootstrap.min.js'></script>
+    <script src='/popper.js/dist/umd/popper.min.js'></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <- ez kell hozzá h responsive legyen -->
+</head>
+
+<body>
+    <div class="container p-5">
+        <div class="container">
+            <div class="row">
+                {{> header}}
+            </div>
+            </div>
+            <div class="container row pt-3 m-0 pl-0 pr-0">           
+                {{> menu}}
+                <div class="container col-9">
+                {{{body}}}
+            </div>
+            </div>
+            
+    </div>
+</body>
+</html>
