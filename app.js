@@ -4,6 +4,10 @@ const port = 5000;
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('inventory.db');
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 const exphbs = require('express-handlebars');
 
 app.engine('handlebars', exphbs());
@@ -11,48 +15,6 @@ app.set('view engine', 'handlebars');
 
 const path = require('path');
 app.use(express.static(path.join(__dirname, '/public')));
-
-// const products = [
-//     {
-//         ID: 1,
-//         Megnevezés: 'Processzor',
-//         Csoport: 'Számítástechnika'
-//     },
-//     {
-//         ID: 2,
-//         Megnevezés: 'Processzor',
-//         Csoport: 'Számítástechnika'
-//     },
-//     {
-//         ID: 3,
-//         Megnevezés: 'Processzor',
-//         Csoport: 'Számítástechnika'
-//     },
-//     {
-//         ID: 4,
-//         Megnevezés: 'Processzor',
-//         Csoport: 'Számítástechnika'
-//     },
-//     {
-//         ID: 5,
-//         Megnevezés: 'Processzor',
-//         Csoport: 'Számítástechnika'
-//     },
-//     {
-//         ID: 6,
-//         Megnevezés: 'Processzor',
-//         Csoport: 'Számítástechnika'
-//     },
-//     {
-//         ID: 7,
-//         Megnevezés: 'Processzor',
-//         Csoport: 'Számítástechnika'
-//     }
-// ]
-
-// app.get('/',(req,res) => {
-//     res.render('home',{products:products, pageTitle:'Products'});
-// })
 
 app.get('/', (req, res) => {
     db.serialize(function() {
@@ -67,6 +29,17 @@ app.get('/', (req, res) => {
             
         });
       });
+
+});
+
+app.post('/addproduct', (req,res) => {
+    const { newproduct, newgroup } = req.body;
+    console.log(newproduct, newgroup);
+    db.serialize(function () {
+        db.run("INSERT INTO products VALUES (?, ?)", [newproduct,newgroup]);
+    });
+
+    res.redirect('/')
 
 })
 
