@@ -1,7 +1,7 @@
 <div class="col-3 pl-0 pr-0">
-<nav class="navbar navbar-dark bg-dark flex-column">
-  <a class="nav-link" href="#">Storage</a>
-  <a class="nav-link" href="#">Products</a>
+<nav class="navbar navbar-dark bg-dark flex-column nav-pills">
+  <a class="nav-link {{#if invent}}active{{/if}}" href="/inventory">Inventory</a>
+  <a class="nav-link {{#if products}}active{{/if}}" href="/">Products</a>
   <a class="nav-link" href="#">Groups</a>
 </nav>
 </div>

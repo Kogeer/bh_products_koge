@@ -18,9 +18,9 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 app.get('/', (req, res) => {
     db.serialize(function() {
-        db.all("SELECT rowid, * from products", function(err, results) {
+        db.all("SELECT * from products", function(err, results) {
             if (err != null) {
-                // hibakezelés
+                console.log(`Something went wrong: ${err.toString()}`);
             }
           res.render('home', {
               pageTitle: 'Products',
@@ -36,11 +36,41 @@ app.post('/addproduct', (req,res) => {
     const { newproduct, newgroup } = req.body;
     console.log(newproduct, newgroup);
     db.serialize(function () {
-        db.run("INSERT INTO products VALUES (?, ?)", [newproduct,newgroup]);
+        db.run("INSERT INTO products(name,category) VALUES (?, ?)", [newproduct,newgroup]);
+
+        db.get(`SELECT id FROM products WHERE name = "${newproduct}" AND category = "${newgroup}"`, (err, result) => {
+            if (err != null) {
+                console.error(err.toString())
+            }
+
+            db.run(`INSERT INTO inventory(product_id, stock) VALUES (${result.id}, 0)`, (err) => {
+                if (err != null) {
+                    console.error(err.toString())
+                }
+            })
+            res.redirect('/');
+        })
+    });
+});
+
+app.get('/inventory',(req,res) => {
+    db.serialize(function () {
+        db.all("SELECT products.id, products.name, products.category, inventory.stock FROM products JOIN inventory ON products.id = inventory.product_id", function (err, results) {
+            if (err != null) {
+                console.error(err.toString())
+            }
+            res.render('inventory',{pageTitle: 'Inventory', invent: results});
+        });
+    });
+});
+
+app.post('/editinv',(req,res) => {
+    const {newpieces,id} = req.body;
+    db.serialize(function() {
+        db.run(`UPDATE inventory SET stock = "${newpieces}" WHERE product_id = "${id}"`);
     });
 
-    res.redirect('/')
-
+    res.redirect('/inventory');
 })
 
 app.listen(port, () => {
