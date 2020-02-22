@@ -33,10 +33,9 @@ app.get('/', (req, res) => {
 });
 
 app.post('/addproduct', (req,res) => {
-    const { newproduct, newgroup } = req.body;
-    console.log(newproduct, newgroup);
+    const { newproduct, newgroup,productDescribe } = req.body;
     db.serialize(function () {
-        db.run("INSERT INTO products(name,category) VALUES (?, ?)", [newproduct,newgroup]);
+        db.run("INSERT INTO products(name,category,describe) VALUES (?, ?, ?)", [newproduct,newgroup,productDescribe]);
 
         db.get(`SELECT id FROM products WHERE name = "${newproduct}" AND category = "${newgroup}"`, (err, result) => {
             if (err != null) {
@@ -74,10 +73,19 @@ app.post('/editinv',(req,res) => {
 });
 
 app.post('/editproduct',(req,res) => {
-    const {newproduct,newgroup,id} = req.body;
+    const {newproduct,newgroup,id,productDescribe} = req.body;
     db.serialize(function() {
-        db.run(`UPDATE products SET name = "${newproduct}", category = "${newgroup}" WHERE products.id = "${id}"`);
+        db.run(`UPDATE products SET name = "${newproduct}", category = "${newgroup}", describe = "${productDescribe}" WHERE products.id = "${id}"`);
     });
+    res.redirect('/');
+});
+
+app.post('/deleteproduct',(req,res) => {
+    const {id} = req.body;
+    db.serialize(function() {
+        db.run(`DELETE FROM products WHERE products.id="${id}"`);
+        db.run(`DELETE FROM inventory WHERE product_id="${id}"`);
+    })
     res.redirect('/');
 })
 

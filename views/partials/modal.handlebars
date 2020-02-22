@@ -1,4 +1,4 @@
-<!-- Modal -->
+<!-- New product Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -13,6 +13,8 @@
                 <form method="POST" action="/addproduct">
                     <div>Új termék:</div>
                     <div><input type="text" name="newproduct" class="form-control form-control-lg"></div>
+                    <div>Termék leírás:</div>
+                    <div><input type="text" name="productDescribe" class="form-control form-control-lg"></div>
                     <div>
                         <label for="groups">Csoport:</label>
                         <select id="groups" name="newgroup" class="form-control form-control-lg">
@@ -45,6 +47,8 @@
                 <form method="POST" action="/editproduct">
                     <div>Új termék:</div>
                     <div><input type="text" name="newproduct" class="form-control form-control-lg" id="newprodInput"></div>
+                    <div>Termék leírás:</div>
+                    <div><input type="text" name="productDescribe" class="form-control form-control-lg" id="newDescribe"></div>
                     <div>
                         <label for="groups">Csoport:</label>
                         <select id="groupsEdit" name="newgroup" class="form-control form-control-lg">
@@ -56,6 +60,30 @@
                     <input type="hidden" name="id" id="needId">
                     </div>
                     <input class="btn btn-primary mt-3" type="submit" value="Registrate">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="/deleteproduct">
+                    Are you sure want to delete this product?
+                    <div>
+                    <input type="hidden" name="id" id="deleteId">
+                    </div>
+                    <input class="btn btn-primary mt-3" type="submit" value="Delete">
                 </form>
             </div>
         </div>

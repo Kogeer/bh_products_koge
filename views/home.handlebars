@@ -14,8 +14,8 @@
       <th scope="row">{{id}}</th>
       <td>{{name}}</td>
       <td>{{category}}</td>
-      <td><button type="button" id="edit-btn"class="btn btn-primary" data-toggle="modal" data-target="#editModal" onclick="editInput('{{id}}','{{name}}','{{category}}')">Edit</button>
-      <a href="#" class="btn btn-danger btn-sm ml-1">Delete</a></td>
+      <td><button type="button" id="edit-btn"class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal" onclick="editInput('{{id}}','{{name}}','{{category}}','{{describe}}')">Edit</button>
+      <button type="button" id="edit-btn"class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" onclick="deleteInput('{{id}}')">Delete</button>
     </tr>
     {{/each}}
   </tbody>
@@ -26,9 +26,15 @@
 </div>
 
 <script>
-  function editInput(id,name,category) {
+  function editInput(id,name,category,describe) {
     document.querySelector('#newprodInput').value = name;
     document.querySelector('#groupsEdit').value = category;
     document.querySelector('#needId').value = id;
+    document.querySelector('#newDescribe').value = describe;
+  }
+
+  function deleteInput(id) {
+    document.querySelector('#deleteId').value = id;
+    console.log(id);
   }
 </script>
