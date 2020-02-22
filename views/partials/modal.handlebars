@@ -1,7 +1,3 @@
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    Új termék
-</button>
-
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -22,7 +18,7 @@
                         <select id="groups" name="newgroup" class="form-control form-control-lg">
                             <option value="Motor">Motor</option>
                             <option value="Számítástechnika">Számítástechnika</option>
-                            <option value="Konyhatechnika">Konyhatechnika</option>
+                            <option value="Fűtéstechnika">Fűtéstechnika</option>
                             <option value="Smart home">Smart home solution</option>
                         </select>
 
@@ -33,3 +29,36 @@
         </div>
     </div>
 </div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Új termék hozzáadása</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="/editproduct">
+                    <div>Új termék:</div>
+                    <div><input type="text" name="newproduct" class="form-control form-control-lg" id="newprodInput"></div>
+                    <div>
+                        <label for="groups">Csoport:</label>
+                        <select id="groupsEdit" name="newgroup" class="form-control form-control-lg">
+                            <option value="Motor">Motor</option>
+                            <option value="Számítástechnika">Számítástechnika</option>
+                            <option value="Fűtéstechnika">Fűtéstechnika</option>
+                            <option value="Smart home">Smart home solution</option>
+                        </select>
+                    <input type="hidden" name="id" id="needId">
+                    </div>
+                    <input class="btn btn-primary mt-3" type="submit" value="Registrate">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

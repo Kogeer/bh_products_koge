@@ -71,6 +71,14 @@ app.post('/editinv',(req,res) => {
     });
 
     res.redirect('/inventory');
+});
+
+app.post('/editproduct',(req,res) => {
+    const {newproduct,newgroup,id} = req.body;
+    db.serialize(function() {
+        db.run(`UPDATE products SET name = "${newproduct}", category = "${newgroup}" WHERE products.id = "${id}"`);
+    });
+    res.redirect('/');
 })
 
 app.listen(port, () => {
