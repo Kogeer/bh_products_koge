@@ -90,7 +90,6 @@ app.post('/deleteproduct',(req,res) => {
 });
 
 app.get('/groups',(req,res) => {
-    // res.render('groups',{pageTitle : 'Groups', groupElements: groupElements});
     db.serialize(function() {
         db.all("SELECT name FROM inventory_groups", function(err, results) {
             if (err != null) {
@@ -103,10 +102,17 @@ app.get('/groups',(req,res) => {
             
         });
       });
+});
+
+app.post('/addgroup',(req,res) => {
+    const { newgroup } = req.body;
+    console.log(newgroup);
+    db.serialize(function () {
+        db.run("INSERT INTO inventory_groups(name) VALUES (?)", [newgroup]);
+        res.redirect('groups');
+    });
 })
 
 app.listen(port, () => {
     console.log(`This app listen on port: ${port}`);
 });
-
-const groupElements = ['motor','fűtéstechnika'];

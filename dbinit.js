@@ -16,7 +16,7 @@ db.serialize(function () {
     db.run("INSERT INTO inventory(product_id, stock) VALUES (3, 1)");
     db.run("INSERT INTO inventory(product_id, stock) VALUES (4, 16)");
 
-    db.run("CREATE TABLE IF NOT EXISTS inventory_groups (id INTEGER, name VARCHAR(40))");
+    db.run("CREATE TABLE IF NOT EXISTS inventory_groups (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(40))");
 
     db.run("INSERT INTO inventory_groups(id,name) VALUES (1, 'Számítástechnika')");
     db.run("INSERT INTO inventory_groups(id,name) VALUES (2, 'Motor')");
