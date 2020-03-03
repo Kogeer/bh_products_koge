@@ -87,8 +87,26 @@ app.post('/deleteproduct',(req,res) => {
         db.run(`DELETE FROM inventory WHERE product_id="${id}"`);
     })
     res.redirect('/');
+});
+
+app.get('/groups',(req,res) => {
+    // res.render('groups',{pageTitle : 'Groups', groupElements: groupElements});
+    db.serialize(function() {
+        db.all("SELECT name FROM inventory_groups", function(err, results) {
+            if (err != null) {
+                console.log(`Something went wrong: ${err.toString()}`);
+            }
+          res.render('groups', {
+              pageTitle: 'Groups',
+              groupElements: results
+          })
+            
+        });
+      });
 })
 
 app.listen(port, () => {
     console.log(`This app listen on port: ${port}`);
 });
+
+const groupElements = ['motor','fűtéstechnika'];

@@ -1,0 +1,22 @@
+<div class="container-fluid" id="table-container">
+    <table class="table table-dark text-center vertical-center">
+  <thead>
+    <tr>
+      <th scope="col">Groups</th>
+      <th scope="col">Operations</th>
+    </tr>
+  </thead>
+  <tbody>
+      {{#each groupElements}}
+    <tr>
+      <th scope="row">{{name}}</th>
+      <td><button type="button" id="edit-btn"class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal" onclick="editInput('{{id}}','{{name}}','{{category}}','{{describe}}')">Edit</button>
+      <button type="button" id="edit-btn"class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" onclick="deleteInput('{{id}}')">Delete</button>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+<div class="d-flex justify-content-end"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Új csoport
+</button>{{> modal}}</div>
+</div>
