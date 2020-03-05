@@ -18,12 +18,10 @@
                     <div>
                         <label for="groups">Csoport:</label>
                         <select id="groups" name="newgroup" class="form-control form-control-lg">
-                            <option value="Motor">Motor</option>
-                            <option value="Számítástechnika">Számítástechnika</option>
-                            <option value="Fűtéstechnika">Fűtéstechnika</option>
-                            <option value="Smart home">Smart home solution</option>
+                            {{#each groups}}
+                            <option value="{{name}}">{{name}}</option>
+                            {{/each}}
                         </select>
-
                     </div>
                     <input class="btn btn-primary mt-3" type="submit" value="Registrate">
                 </form>
@@ -52,10 +50,9 @@
                     <div>
                         <label for="groups">Csoport:</label>
                         <select id="groupsEdit" name="newgroup" class="form-control form-control-lg">
-                            <option value="Motor">Motor</option>
-                            <option value="Számítástechnika">Számítástechnika</option>
-                            <option value="Fűtéstechnika">Fűtéstechnika</option>
-                            <option value="Smart home">Smart home solution</option>
+                            {{#each groups}}
+                            <option value="{{name}}">{{name}}</option>
+                            {{/each}}
                         </select>
                     <input type="hidden" name="id" id="needId">
                     </div>
