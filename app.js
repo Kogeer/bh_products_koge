@@ -18,12 +18,12 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 app.get('/', (req, res) => {
     db.serialize(function () {
-        db.all("SELECT * from products", function (err, results) {
+        db.all("SELECT products.id AS id, describe, inventory_groups.name AS gn, products.name AS pn FROM products LEFT JOIN inventory_groups ON products.cat_id = inventory_groups.id;", function (err, results) {
             if (err != null) {
                 console.log(`Something went wrong: ${err.toString()}`);
             }
-            db.all("SELECT * from inventory_groups", function(err,groups) {
-                if(err != null) {
+            db.all("SELECT name FROM inventory_groups;", function (err, groups) {
+                if (err != null) {
                     console.log(`Something went wrong: ${err.toString()}`);
                 }
                 res.render('home', {
@@ -32,36 +32,29 @@ app.get('/', (req, res) => {
                     groups: groups
                 })
             })
-            
-
         });
     });
-
 });
 
 app.post('/addproduct', (req, res) => {
     const { newproduct, newgroup, productDescribe } = req.body;
     db.serialize(function () {
-        db.run("INSERT INTO products(name,category,describe) VALUES (?, ?, ?)", [newproduct, newgroup, productDescribe]);
-
-        db.get(`SELECT id FROM products WHERE name = "${newproduct}" AND category = "${newgroup}"`, (err, result) => {
+        db.get(`SELECT id FROM inventory_groups WHERE name = "${newgroup}";`, (err, result_group) => {
             if (err != null) {
-                console.error(err.toString())
+                console.log(`Something went wrong ${err.toString()}`)
             }
-
-            db.run(`INSERT INTO inventory(product_id, stock) VALUES (${result.id}, 0)`, (err) => {
-                if (err != null) {
-                    console.error(err.toString())
-                }
+            db.run("INSERT INTO products(name,cat_id,describe) VALUES (?,?,?)", [newproduct, result_group.id, productDescribe]);
+            db.get(`SELECT id FROM products WHERE name = "${newproduct}"`, (err, result_id) => {
+                db.run("INSERT INTO inventory(product_id, stock) VALUES (?,0)", [result_id.id]);
             })
-            res.redirect('/');
         })
+        res.redirect('/');
     });
 });
 
 app.get('/inventory', (req, res) => {
     db.serialize(function () {
-        db.all("SELECT products.id, products.name, products.category, inventory.stock FROM products JOIN inventory ON products.id = inventory.product_id", function (err, results) {
+        db.all("SELECT products.id, products.name, products.cat_id, inventory.stock FROM products JOIN inventory ON products.id = inventory.product_id", function (err, results) {
             if (err != null) {
                 console.error(err.toString())
             }
@@ -82,7 +75,9 @@ app.post('/editinv', (req, res) => {
 app.post('/editproduct', (req, res) => {
     const { newproduct, newgroup, id, productDescribe } = req.body;
     db.serialize(function () {
-        db.run(`UPDATE products SET name = "${newproduct}", category = "${newgroup}", describe = "${productDescribe}" WHERE products.id = "${id}"`);
+        db.get(`SELECT id FROM inventory_groups WHERE name = "${newgroup}";`, (err, groupd_id) => {
+            db.run(`UPDATE products SET name = "${newproduct}", cat_id = "${groupd_id.id}", describe = "${productDescribe}" WHERE products.id = "${id}"`);
+        })
     });
     res.redirect('/');
 });
@@ -98,7 +93,7 @@ app.post('/deleteproduct', (req, res) => {
 
 app.get('/groups', (req, res) => {
     db.serialize(function () {
-        db.all("SELECT name FROM inventory_groups", function (err, results) {
+        db.all("SELECT name, id FROM inventory_groups", function (err, results) {
             if (err != null) {
                 console.log(`Something went wrong: ${err.toString()}`);
             }
@@ -119,6 +114,23 @@ app.post('/addgroup', (req, res) => {
         res.redirect('groups');
     });
 });
+
+app.post('/editgroup', (req, res) => {
+    const { editGroup, editId } = req.body;
+    db.run(`UPDATE inventory_groups SET name = "${editGroup}" WHERE inventory_groups.id="${editId}"`, (err) => {
+        if (err != null) {
+            console.log(`Something went wrong ${err.toString()}`);
+        }
+    })
+    res.redirect('/groups');
+});
+
+app.post('/deletegroup', (req,res) => {
+    const { deleteId } = req.body;
+    console.log(deleteId);
+    db.run(`DELETE FROM inventory_groups WHERE id="${deleteId}";`);
+    res.redirect('/groups');
+})
 
 app.listen(port, () => {
     console.log(`This app listen on port: ${port}`);

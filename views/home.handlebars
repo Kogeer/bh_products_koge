@@ -1,32 +1,45 @@
 <div class="container-fluid" id="table-container">
-    <table class="table table-dark text-center vertical-center">
-  <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Name</th>
-      <th scope="col">Group</th>
-      <th scope="col">Operations</th>
-    </tr>
-  </thead>
-  <tbody>
-      {{#each products}}
-    <tr>
-      <th scope="row">{{id}}</th>
-      <td>{{name}}</td>
-      <td>{{category}}</td>
-      <td><button type="button" id="edit-btn"class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal" onclick="editInput('{{id}}','{{name}}','{{category}}','{{describe}}')">Edit</button>
-      <button type="button" id="edit-btn"class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" onclick="deleteInput('{{id}}')">Delete</button>
-    </tr>
+  <form class="form-inline mb-2 d-flex justify-content-center">
+  <select name="filternames" class="custom-select">
+    <option selected>Choose...</option>
+    {{#each groups}}
+    <option value="{{name}}">{{name}}</option>
     {{/each}}
-  </tbody>
-</table>
-<div class="d-flex justify-content-end"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    Új termék
-</button>{{> modal}}</div>
+  </select>
+  <input class="btn btn-secondary" type="submit" value="Filter">
+  </form>
+
+  <table class="table table-dark text-center vertical-center">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Group</th>
+        <th scope="col">Operations</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each products}}
+      <tr>
+        <th scope="row">{{id}}</th>
+        <td>{{pn}}</td>
+        <td>{{gn}}</td>
+        <td><button type="button" id="edit-btn" class="btn btn-primary btn-sm" data-toggle="modal"
+            data-target="#editModal" onclick="editInput('{{id}}','{{pn}}','{{gn}}','{{describe}}')">Edit</button>
+          <button type="button" id="edit-btn" class="btn btn-danger btn-sm" data-toggle="modal"
+            data-target="#deleteModal" onclick="deleteInput('{{id}}')">Delete</button>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-end"><button type="button" class="btn btn-primary" data-toggle="modal"
+      data-target="#exampleModal">
+      Új termék
+    </button>{{> modal}}</div>
 </div>
 
 <script>
-  function editInput(id,name,category,describe) {
+  function editInput(id, name, category, describe) {
     document.querySelector('#newprodInput').value = name;
     document.querySelector('#groupsEdit').value = category;
     document.querySelector('#needId').value = id;

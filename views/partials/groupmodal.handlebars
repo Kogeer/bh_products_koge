@@ -19,3 +19,48 @@
         </div>
     </div>
 </div>
+
+<!-- Edit group Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Új termék hozzáadása</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="/editgroup">
+                    <div>Új csoport:</div>
+                    <div><input type="text" name="editGroup" id="editInput"class="form-control form-control-lg"></div>
+                    <div><input type="hidden" name="editId" id="editId"></div>
+                    <input class="btn btn-primary mt-3" type="submit" value="Registrate">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit group Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Új termék hozzáadása</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="/deletegroup">
+                    <div>Are you sure want to delete this group?</div>
+                    <div><input type="hidden" name="deleteId" id="deleteId"></div>
+                    <input class="btn btn-primary mt-3" type="submit" value="Yes">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

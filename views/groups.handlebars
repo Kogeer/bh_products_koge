@@ -10,7 +10,7 @@
       {{#each groupElements}}
     <tr>
       <th scope="row">{{name}}</th>
-      <td><button type="button" id="edit-btn"class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal" onclick="editInput('{{id}}','{{name}}','{{category}}','{{describe}}')">Edit</button>
+      <td><button type="button" id="edit-btn"class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal" onclick="editInput('{{name}}','{{id}}')">Edit</button>
       <button type="button" id="edit-btn"class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" onclick="deleteInput('{{id}}')">Delete</button>
     </tr>
     {{/each}}
@@ -20,3 +20,15 @@
     Új csoport
 </button>{{> groupmodal}}</div>
 </div>
+
+<script>
+  function editInput(groupName,groupdId) {
+    document.querySelector('#editInput').value = groupName;
+    document.querySelector('#editId').value = groupdId;
+  }
+
+  function deleteInput(id) {
+    document.querySelector('#deleteId').value = id;
+    console.log(id);
+  }
+</script>
